@@ -309,7 +309,7 @@
 
 <h2>Gegenereerde Prompt</h2>
 <pre id="output"></pre>
-
+<button type="button" onclick="kopieerPrompt()">📋 Kopieer prompt</button>
 <script>
 const beschrijvingen = {
   taalniveau: ['zeer eenvoudig', 'eenvoudig', 'gemiddeld', 'complex', 'zeer complex'],
@@ -385,6 +385,24 @@ Achtergrond en biografie:
 document.addEventListener("DOMContentLoaded", () => {
   Object.keys(beschrijvingen).forEach(updateLabel);
 });
+
+// Prompt kopiëren
+
+function kopieerPrompt() {
+  const output = document.getElementById('output').textContent;
+  if (!output.trim()) {
+    alert("Er is geen prompt om te kopiëren.");
+    return;
+  }
+
+  navigator.clipboard.writeText(output).then(() => {
+    alert("Prompt gekopieerd naar klembord!");
+  }).catch(err => {
+    console.error("Fout bij kopiëren:", err);
+    alert("Er is iets misgegaan bij het kopiëren.");
+  });
+}
+
 </script>
 
 </body>
