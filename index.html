@@ -96,7 +96,7 @@
 
 <form id="promptForm">
 
-  <h2>1. Basisinformatie</h2>
+  <h2>Basisinformatie</h2>
 
   <label>Rol van je bot:
     <input type="text" id="roltype" placeholder="bijv. coach">
@@ -149,8 +149,11 @@
       <option>Nee</option>
     </select>
   </label>
+  <label>Wat is nog meer van belang bij de communicatiestijl?
+    <textarea id="overigcomm" placeholder="bijv. de bot reageert sensitief op stressignalen"></textarea>
+  </label>
 
-  <h2>3. Gespreksgedrag</h2>
+  <h2>Gespreksgedrag</h2>
   
   <label>Responsstijl:
     <div class="slider-container">
@@ -183,7 +186,6 @@
   <h2>Waarden</h2>
   
 
-<label>Waarden (selecteer wat past):</label>
 <div class="checkbox-grid">
   <!-- Kolom 1 -->
   <label><input type="checkbox" name="waarden" value="Behulpzaamheid"> Behulpzaamheid</label>
@@ -224,7 +226,7 @@
 </div>
 
   </label>
-<h2>Waarden</h2>  
+<h2>Persooonlijkheidskenmerken</h2>  
   
 <div class="checkbox-grid">
   <!-- Kolom 1 -->
@@ -282,11 +284,13 @@
     <textarea id="ontmoedigen" placeholder="bijv. uitstelgedrag en onzekerheid"></textarea>
   </label>
 
-  <label>Wat mag de bot doen?
+<h2>Mogelijkheden</h2>
+	
+  <label>Wat kan de bot doen?
     <textarea id="magdoen" placeholder="bijv. uitleg geven, samenvatten, tips geven"></textarea>
   </label>
 
-    <label>Wat mag de bot niet doen?
+    <label>Wat kan de bot niet doen?
     <textarea id="nietdoen" placeholder="bijv. medisch advies geven of persoonlijke gegevens vragen"></textarea>
   </label>
 
@@ -353,6 +357,7 @@ Communicatiestijl:
 • Humor: ${waardeBeschrijving('humor')}
 • Beeldspraak: ${waardeBeschrijving('beeldspraak')}
 • Emoji’s: ${g('emoji')}
+• Voor de communicatiestijl is het volgende ook van belang: ${g('overigcomm')}
 
 Gespreksgedrag:
 • Responsstijl: ${waardeBeschrijving('responsstijl')}
