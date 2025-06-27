@@ -87,7 +87,16 @@
 .checkbox-grid input[type="checkbox"] {
   margin-right: 6px;
 }
-	
+.step {
+  background: white;
+  padding: 20px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+
+button {
+  margin: 12px 4px 0 0;
+}	
   </style>
 </head>
 <body>
@@ -96,6 +105,7 @@
 
 <form id="promptForm">
 
+<div class="step-1">
   <h2>Basisinformatie</h2>
 
   <label>Rol van je bot:
@@ -105,7 +115,10 @@
   <label>Onderwerp of domein:
     <input type="text" id="onderwerp" placeholder="bijv. studieplanning en motivatie">
   </label>
+    <button type="button" onclick="nextStep()">Volgende ➡️</button>
+</div>
 
+<div class="step" id="step-2">	
   <h2>2. Communicatiestijl</h2>
 
   <label>Taalniveau:
@@ -153,8 +166,12 @@
 <label>Wat is nog meer van belang bij de communicatiestijl?
     <textarea id="overigcomm" placeholder="bijv. de bot reageert sensitief op stressignalen"></textarea>
 </label>
+<button type="button" onclick="prevStep()">⬅️ Vorige</button>
+    <button type="button" onclick="nextStep()">Volgende ➡️</button>
+</div>
 
-  <h2>Gespreksgedrag</h2>
+<div class="step" id="step-3">
+	<h2>Gespreksgedrag</h2>
   
   <label>Responsstijl:
     <div class="slider-container">
@@ -187,10 +204,14 @@
 <label>Wat is nog meer van belang bij gespreksgedrag?
     <textarea id="overiggespr" placeholder="bijv. de bot reageert in een whatsappstijl"></textarea>
 </label>
-	
+<button type="button" onclick="prevStep()">⬅️ Vorige</button>
+<button type="button" onclick="nextStep()">Volgende ➡️</button>
+
+</div>
+
+<div class="step" id="step-4">
   <h2>Waarden</h2>
   
-
 <div class="checkbox-grid">
   <!-- Kolom 1 -->
   <label><input type="checkbox" name="waarden" value="Behulpzaamheid"> Behulpzaamheid</label>
@@ -231,7 +252,11 @@
 </div>
 
   </label>
-<h2>Persooonlijkheidskenmerken</h2>  
+	<button type="button" onclick="prevStep()">⬅️ Vorige</button>
+	<button type="button" onclick="nextStep()">Volgende ➡️</button>
+</div>
+<div class="step" id="step-5">	
+	<h2>Persooonlijkheidskenmerken</h2>  
   
 <div class="checkbox-grid">
   <!-- Kolom 1 -->
@@ -269,7 +294,11 @@
   <label><input type="checkbox" name="persoonlijkheid" value="Vergevingsgezind"> Vergevingsgezind</label>
   
 </div>
+<button type="button" onclick="prevStep()">⬅️ Vorige</button>
+	<button type="button" onclick="nextStep()">Volgende ➡️</button>
+</div>
 
+<div class="step" id="step-6">
   <h2>Verantwoordelijkheden</h2>
 
   <label>Wat moet de bot vragen?
@@ -288,7 +317,11 @@
   <label>Wat ontmoedigt de bot?
     <textarea id="ontmoedigen" placeholder="bijv. uitstelgedrag en onzekerheid"></textarea>
   </label>
+<button type="button" onclick="prevStep()">⬅️ Vorige</button>
+	<button type="button" onclick="nextStep()">Volgende ➡️</button>
+</div>
 
+<div class="step" id="step-7">
 <h2>Mogelijkheden</h2>
 	
   <label>Wat kan de bot doen?
@@ -302,7 +335,11 @@
     <label>Wat weet de bot al over de context?
     <textarea id="context" placeholder="bijv. dat studenten in een drukke periode zitten met veel deadlines"></textarea>
   </label>
-  
+<button type="button" onclick="prevStep()">⬅️ Vorige</button>
+<button type="button" onclick="nextStep()">Volgende ➡️</button>
+</div>
+
+<div class="step" id="step-8">
 <h2>Bio van de bot</h2>
 
   <label>Naam van de bot:
@@ -312,8 +349,17 @@
   <label>Achtergrond en biografie van de bot:
     <textarea id="achtergrond" placeholder="bijvoorbeeld: een vlotte gen z coach "></textarea>
   </label>
-  
-  <button type="button" onclick="genereerPrompt()">Genereer Prompt</button>
+<button type="button" onclick="prevStep()">⬅️ Vorige</button>
+<button type="button" onclick="nextStep()">Volgende ➡️</button>
+</div>
+
+	
+<div class="step" id="step-final" style="display:none;">
+    <h2>Overzicht en Genereren</h2>
+    <button type="button" onclick="prevStep()">⬅️ Vorige</button>
+    <button type="button" onclick="genereerPrompt()">🎯 Genereer Prompt</button>
+  </div>
+
 </form>
 
 <h2>Gegenereerde Prompt</h2>
@@ -430,6 +476,30 @@ function kopieerPrompt() {
     }, 2000);
   });
 }
+let currentStep = 0;
+const steps = document.querySelectorAll('.step');
+
+function showStep(index) {
+  steps.forEach((step, i) => {
+    step.style.display = i === index ? 'block' : 'none';
+  });
+  currentStep = index;
+}
+
+function nextStep() {
+  if (currentStep < steps.length - 1) {
+    showStep(currentStep + 1);
+  }
+}
+
+function prevStep() {
+  if (currentStep > 0) {
+    showStep(currentStep - 1);
+  }
+}
+
+// Zorg dat stap 0 actief is bij laden
+document.addEventListener('DOMContentLoaded', () => showStep(0));
 
 
 </script>
