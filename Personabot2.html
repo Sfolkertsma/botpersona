@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bot Persona Prompt Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #f5f5f5;
+      border-radius: 8px;
+    }
+    h2 {
+      background: #4285f4;
+      color: white;
+      padding: 8px;
+      border-radius: 4px;
+      margin-top: 30px;
+      font-size: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: bold;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 6px;
+      margin-top: 4px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    input[type=range] {
+      width: 80%;
+      vertical-align: middle;
+    }
+    .slider-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .slider-value {
+      font-size: 14px;
+      color: #333;
+      margin-left: 10px;
+      min-width: 220px;
+      text-align: right;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #4285f4;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    pre {
+      background: #fff;
+      padding: 12px;
+      border: 1px solid #ccc;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+	
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px 12px;
+  margin-top: 8px;
+  justify-items: start; /* Alles links in de grid-cel */
+}
+
+.checkbox-grid label {
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-start; /* <-- Zorgt dat checkbox + tekst links staan */
+  font-weight: normal;
+  margin: 0;
+  text-align: left;
+}
+
+.checkbox-grid input[type="checkbox"] {
+  margin-right: 6px;
+}
+	
+  </style>
+</head>
+<body>
+
+<h1>Bot Persona Prompt Generator</h1>
+
+<form id="promptForm">
+
+  <h2>1. Basisinformatie</h2>
+
+  <label>Rol van je bot:
+    <input type="text" id="roltype" placeholder="bijv. coach">
+  </label>
+  
+  <label>Onderwerp of domein:
+    <input type="text" id="onderwerp" placeholder="bijv. studieplanning en motivatie">
+  </label>
+
+  <h2>2. Communicatiestijl</h2>
+
+  <label>Taalniveau:
+    <div class="slider-container">
+      <input type="range" id="taalniveau" min="1" max="5" value="3" oninput="updateLabel('taalniveau')">
+      <span class="slider-value" id="taalniveau-label"></span>
+    </div>
+  </label>
+
+  <label>Spreekstijl:
+    <div class="slider-container">
+      <input type="range" id="spreekstijl" min="1" max="5" value="3" oninput="updateLabel('spreekstijl')">
+      <span class="slider-value" id="spreekstijl-label"></span>
+    </div>
+  </label>
+  
+  <label>Lengte van replies:
+    <div class="slider-container">
+      <input type="range" id="lengte" min="1" max="5" value="3" oninput="updateLabel('lengte')">
+      <span class="slider-value" id="lengte-label"></span>
+    </div>
+  </label>
+  
+  <label>Humor:
+    <div class="slider-container">
+      <input type="range" id="humor" min="1" max="5" value="3" oninput="updateLabel('humor')">
+      <span class="slider-value" id="humor-label"></span>
+    </div>
+  </label>
+  
+  <label>Beeldspraak:
+    <div class="slider-container">
+      <input type="range" id="beeldspraak" min="1" max="5" value="3" oninput="updateLabel('beeldspraak')">
+      <span class="slider-value" id="beeldspraak-label"></span>
+    </div>
+  </label>
+  
+  <label>Emoji’s:
+    <select id="emoji">
+      <option selected>Ja</option>
+      <option>Nee</option>
+    </select>
+  </label>
+
+  <h2>3. Gespreksgedrag</h2>
+  
+  <label>Responsstijl:
+    <div class="slider-container">
+      <input type="range" id="responsstijl" min="1" max="5" value="3" oninput="updateLabel('responsstijl')">
+      <span class="slider-value" id="responsstijl-label"></span>
+    </div>
+  </label>
+  
+  <label>Initiatief:
+    <div class="slider-container">
+      <input type="range" id="initiatief" min="1" max="5" value="3" oninput="updateLabel('initiatief')">
+      <span class="slider-value" id="initiatief-label"></span>
+    </div>
+  </label>
+  
+  <label>Gespreksduur:
+    <div class="slider-container">
+      <input type="range" id="duur" min="1" max="5" value="3" oninput="updateLabel('duur')">
+      <span class="slider-value" id="duur-label"></span>
+    </div>
+  </label>
+  
+  <label>Stappen per antwoord:
+    <div class="slider-container">
+      <input type="range" id="stappen" min="1" max="5" value="3" oninput="updateLabel('stappen')">
+      <span class="slider-value" id="stappen-label"></span>
+    </div>
+  </label>
+
+  <h2>4. Waarden en Persoonlijkheid</h2>
+  
+
+<label>Waarden (selecteer wat past):</label>
+<div class="checkbox-grid">
+  <!-- Kolom 1 -->
+  <label><input type="checkbox" name="waarden" value="Behulpzaamheid"> Behulpzaamheid</label>
+  <label><input type="checkbox" name="waarden" value="Toegankelijkheid"> Toegankelijkheid</label>
+  <label><input type="checkbox" name="waarden" value="Empathie"> Empathie</label>
+  <label><input type="checkbox" name="waarden" value="Humor"> Neutraliteit</label>
+  <label><input type="checkbox" name="waarden" value="Humor"> Humor</label>
+  <label><input type="checkbox" name="waarden" value="Professionaliteit"> Professionaliteit</label>
+  <label><input type="checkbox" name="waarden" value="Betrouwbaarheid"> Betrouwbaarheid</label>
+  <label><input type="checkbox" name="waarden" value="Transparantie"> Transparantie</label>
+  <label><input type="checkbox" name="waarden" value="Nieuwsgierigheid"> Nieuwsgierigheid</label>
+  <label><input type="checkbox" name="waarden" value="Snelheid"> Snelheid</label>
+  
+  <!-- Kolom 2 -->
+  
+  <label><input type="checkbox" name="waarden" value="Veiligheid"> Veiligheid</label>
+  <label><input type="checkbox" name="waarden" value="Innovativiteit"> Innovativiteit</label>
+  <label><input type="checkbox" name="waarden" value="Bescheidenheid"> Bescheidenheid</label>
+  <label><input type="checkbox" name="waarden" value="Vriendelijkheid"> Vriendelijkheid</label>
+  <label><input type="checkbox" name="waarden" value="Respect"> Respect</label>
+  <label><input type="checkbox" name="waarden" value="Nauwkeurigheid"> Nauwkeurigheid</label>
+  <label><input type="checkbox" name="waarden" value="Optimisme"> Optimisme</label>
+  <label><input type="checkbox" name="waarden" value="Openheid"> Openheid</label>
+  <label><input type="checkbox" name="waarden" value="Flexibiliteit"> Flexibiliteit</label>
+  <label><input type="checkbox" name="waarden" value="Geduld"> Geduld</label>
+  
+  <!-- Kolom 3 -->
+  <label><input type="checkbox" name="waarden" value="Eerlijkheid"> Eerlijkheid</label>
+  <label><input type="checkbox" name="waarden" value="Samenwerking"> Samenwerking</label>
+  <label><input type="checkbox" name="waarden" value="Duidelijkheid"> Duidelijkheid</label>
+  <label><input type="checkbox" name="waarden" value="Loyaal"> Loyaal</label>
+  <label><input type="checkbox" name="waarden" value="Autonomie"> Autonomie</label>  
+  <label><input type="checkbox" name="waarden" value="Besluitvaardigheid"> Besluitvaardigheid</label>
+  <label><input type="checkbox" name="waarden" value="Mensgerichtheid"> Mensgerichtheid</label>
+  <label><input type="checkbox" name="waarden" value="Gelijkwaardigheid"> Gelijkwaardigheid</label>
+  <label><input type="checkbox" name="waarden" value="Tact"> Tact</label>
+  <label><input type="checkbox" name="waarden" value="Verantwoordelijkheid"> Verantwoordelijkheid</label>
+</div>
+
+  </label>
+  
+  <label>Persoonlijkheidskenmerken</label>
+<div class="checkbox-grid">
+  <!-- Kolom 1 -->
+  <label><input type="checkbox" name="persoonlijkheid" value="Vrolijk"> Vrolijk</label>
+  <label><input type="checkbox" name="persoonlijkheid" value="Kalm"> Kalm</label>
+  <label><input type="checkbox" name="persoonlijkheid" value="Georganiseerd"> Georganiseerd</label>
+  <label><input type="checkbox" name="persoonlijkheid" value="Speels"> Oplettend</label>
+  <label><input type="checkbox" name="persoonlijkheid" value="Speels"> Speels</label>
+  <label><input type="checkbox" name="persoonlijkheid" value="Serieus"> Serieus</label>
+  <label><input type="checkbox" name="persoonlijkheid" value="Serieus"> Nuchter</label>
+  <label><input type="checkbox" name="persoonlijkheid" value="Leergierig"> Leergierig</label>
+  <label><input type="checkbox" name="persoonlijkheid" value="Charmant"> Charmant</label>  
+  <label><input type="checkbox" name="persoonlijkheid" value="Zorgzaam"> Zorgzaam</label>
+  <!-- Kolom 2 -->
+  <label><input type="checkbox" name="persoonlijkheid" value="Trouw"> Trouw</label>
+  <label><input type="checkbox" name="persoonlijkheid" value="Doortastend"> Doortastend</label>
+  <label><input type="checkbox" name="persoonlijkheid" value="Tactvol"> Tactvol</label>
+  <label><input type="checkbox" name="persoonlijkheid" value="Analytisch"> Analytisch</label>
+  <label><input type="checkbox" name="persoonlijkheid" value="Avontuurlijk"> Avontuurlijk</label>
+  <label><input type="checkbox" name="persoonlijkheid" value="Beleefd"> Beleefd</label>
+  <label><input type="checkbox" name="persoonlijkheid" value="Zeker"> Zeker</label>
+  <label><input type="checkbox" name="persoonlijkheid" value="Bescheiden"> Bescheiden</label>
+  <label><input type="checkbox" name="persoonlijkheid" value="Gedisciplineerd"> Creatief</label>
+  <label><input type="checkbox" name="persoonlijkheid" value="Gedisciplineerd"> Gedisciplineerd</label>
+  <!-- Kolom 3 -->
+  <label><input type="checkbox" name="persoonlijkheid" value="Grondig"> Grondig</label>
+  <label><input type="checkbox" name="persoonlijkheid" value="Mild"> Mild</label>
+  <label><input type="checkbox" name="persoonlijkheid" value="Pragmatisch"> Pragmatisch</label>
+  <label><input type="checkbox" name="persoonlijkheid" value="Warm"> Warm</label>
+  <label><input type="checkbox" name="persoonlijkheid" value="Wijs"> Wijs</label>
+  <label><input type="checkbox" name="persoonlijkheid" value="Nieuwsgierig"> Nieuwsgierig</label>
+  <label><input type="checkbox" name="persoonlijkheid" value="Objectief"> Objectief</label>
+  <label><input type="checkbox" name="persoonlijkheid" value="Creatief"> Geduldig</label>
+  <label><input type="checkbox" name="persoonlijkheid" value="Betrokken"> Betrokken</label>
+  <label><input type="checkbox" name="persoonlijkheid" value="Vergevingsgezind"> Vergevingsgezind</label>
+  
+</div>
+
+  <h2>Verantwoordelijkheden</h2>
+
+  <label>Wat moet de bot vragen?>
+      <textarea id="moetvragen" placeholder="bijv. vragen wat het leerdoel is en uitleggen waarom plannen belangrijk is"></textarea>
+  </label>
+
+<label>Wat moet de bot vertellen?>
+      <textarea id="moetvertellen" placeholder="bijv. uitleggen waarom plannen belangrijk is"></textarea>
+  </label>
+  
+    
+  <label>Wat moedigt de bot aan?
+    <textarea id="aanmoedigen" placeholder="bijv. zelfreflectie en eigenaarschap"></textarea>
+  </label>
+  
+  <label>Wat ontmoedigt de bot?
+    <textarea id="ontmoedigen" placeholder="bijv. uitstelgedrag en onzekerheid"></textarea>
+  </label>
+
+  <label>Wat mag de bot doen?
+    <textarea id="magdoen" placeholder="bijv. uitleg geven, samenvatten, tips geven"></textarea>
+  </label>
+
+    <label>Wat mag de bot niet doen?
+    <textarea id="nietdoen" placeholder="bijv. medisch advies geven of persoonlijke gegevens vragen"></textarea>
+  </label>
+
+    <label>Wat weet de bot al over de context?
+    <textarea id="context" placeholder="bijv. dat studenten in een drukke periode zitten met veel deadlines"></textarea>
+  </label>
+  
+<h2>Bio van de bot</h2>
+
+  <label>Naam van de bot:
+    <input type="text" id="naam" placeholder="bijv. PlanBuddy">
+  </label>
+  
+  <label>Achtergrond en biografie van de bot:
+    <textarea id="achtergrond" placeholder="bijvoorbeeld: een vlotte gen z coach "></textarea>
+  </label>
+  
+  <button type="button" onclick="genereerPrompt()">Genereer Prompt</button>
+</form>
+
+<h2>Gegenereerde Prompt</h2>
+<pre id="output"></pre>
+
+<script>
+const beschrijvingen = {
+  taalniveau: ['zeer eenvoudig', 'eenvoudig', 'gemiddeld', 'complex', 'zeer complex'],
+  spreekstijl: ['heel informeel', 'informeel', 'neutraal', 'formeel', 'zeer formeel'],
+  lengte: ['één korte zin', 'korte paragraaf', 'enkele alinea’s', 'uitgebreide uitleg', 'zeer uitgebreide uitleg'],
+  humor: ['geen humor', 'zelden humor', 'af en toe humor', 'vaak humor', 'veel humor'],
+  beeldspraak: ['geen beeldspraak', 'zelden beeldspraak', 'af en toe beeldspraak', 'vaak beeldspraak', 'veel beeldspraak'],
+  responsstijl: ['direct antwoord geven', 'meestal direct', 'gemengd', 'vaak verhelderen', 'altijd eerst verhelderen'],
+  initiatief: ['passief', 'weinig initiatief', 'gemiddeld', 'actief', 'zeer proactief'],
+  duur: ['alleen kort antwoord', 'kort antwoord en afronding', 'gemiddeld gesprek', 'ruimte voor verdieping', 'uitgebreid gesprek'],
+  stappen: ['één stap tegelijk', 'meestal één stap', 'gemengd', 'meerdere stappen tegelijk', 'alles tegelijk']
+};
+
+function updateLabel(id) {
+  const waarde = parseInt(document.getElementById(id).value, 10);
+  document.getElementById(id + '-label').textContent = waarde + ' – ' + beschrijvingen[id][waarde - 1];
+}
+
+function genereerPrompt() {
+  const g = id => document.getElementById(id).value.trim();
+  const waardeBeschrijving = (id) => beschrijvingen[id][parseInt(document.getElementById(id).value, 10) - 1];
+
+  // Verzamel aangevinkte waarden
+  const waarden = Array.from(document.querySelectorAll('input[name="waarden"]:checked'))
+    .map(cb => cb.value)
+    .join(', ') || 'Geen';
+  const persoonlijkheid = Array.from(document.querySelectorAll('input[name="persoonlijkheid"]:checked'))
+    .map(cb => cb.value)
+    .join(', ') || 'Geen';
+
+  const prompt = `
+Je bent actief als een cognitive agent. 
+Neem de rol aan van een ${g('roltype')} op het gebied van ${g('onderwerp')}.
+
+Eigenschappen en kenmerken van de agent: 
+
+Communicatiestijl:
+• Taalniveau: ${waardeBeschrijving('taalniveau')}
+• Spreekstijl: ${waardeBeschrijving('spreekstijl')}
+• Lengte van replies: ${waardeBeschrijving('lengte')}
+• Humor: ${waardeBeschrijving('humor')}
+• Beeldspraak: ${waardeBeschrijving('beeldspraak')}
+• Emoji’s: ${g('emoji')}
+
+Gespreksgedrag:
+• Responsstijl: ${waardeBeschrijving('responsstijl')}
+• Initiatief: ${waardeBeschrijving('initiatief')}
+• Gespreksduur: ${waardeBeschrijving('duur')}
+• Stappen per antwoord: ${waardeBeschrijving('stappen')}
+
+Waarden: ${waarden}
+Persoonlijkheid: ${persoonlijkheid}
+
+De bot:
+• Mag: ${g('magdoen')}
+• Moet vragen: ${g('moetvragen')}
+• Moet vertellen: ${g('moetvertellen')}
+• Moedigt aan: ${g('aanmoedigen')}
+• Ontmoedigt: ${g('ontmoedigen')}
+• Mag niet: ${g('nietdoen')}
+• Weet al: ${g('context')}
+
+Achtergrond en biografie:
+• Naam: ${g('naam')}
+• Achtergrond/stijl: ${g('achtergrond')}
+`;
+
+  document.getElementById('output').textContent = prompt;
+}
+
+
+// Initialize all labels
+document.addEventListener("DOMContentLoaded", () => {
+  Object.keys(beschrijvingen).forEach(updateLabel);
+});
+</script>
+
+</body>
+</html>
