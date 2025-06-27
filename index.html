@@ -96,7 +96,7 @@
 
 <form id="promptForm">
 
-  <h2>1. Basisinformatie</h2>
+  <h2>Basisinformatie</h2>
 
   <label>Rol van je bot:
     <input type="text" id="roltype" placeholder="bijv. coach">
@@ -148,6 +148,9 @@
       <option selected>Ja</option>
       <option>Nee</option>
     </select>
+  </label>
+  <label>Wat is nog meer van belang bij de communicatiestijl?
+    <textarea id="overigcomm" placeholder="bijv. de bot reageert sensitief op stressignalen"></textarea>
   </label>
 
   <h2>Gespreksgedrag</h2>
@@ -354,6 +357,7 @@ Communicatiestijl:
 • Humor: ${waardeBeschrijving('humor')}
 • Beeldspraak: ${waardeBeschrijving('beeldspraak')}
 • Emoji’s: ${g('emoji')}
+• Voor de communicatiestijl is het volgende ook van belang: ${g('overigcomm')}
 
 Gespreksgedrag:
 • Responsstijl: ${waardeBeschrijving('responsstijl')}
