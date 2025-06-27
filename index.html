@@ -149,9 +149,10 @@
       <option>Nee</option>
     </select>
   </label>
-  <label>Wat is nog meer van belang bij de communicatiestijl?
+	
+<label>Wat is nog meer van belang bij de communicatiestijl?
     <textarea id="overigcomm" placeholder="bijv. de bot reageert sensitief op stressignalen"></textarea>
-  </label>
+</label>
 
   <h2>Gespreksgedrag</h2>
   
@@ -183,6 +184,10 @@
     </div>
   </label>
 
+<label>Wat is nog meer van belang bij gespreksgedrag?
+    <textarea id="overiggespr" placeholder="bijv. de bot reageert in een whatsappstijl"></textarea>
+</label>
+	
   <h2>Waarden</h2>
   
 
@@ -364,6 +369,7 @@ Gespreksgedrag:
 • Initiatief: ${waardeBeschrijving('initiatief')}
 • Gespreksduur: ${waardeBeschrijving('duur')}
 • Stappen per antwoord: ${waardeBeschrijving('stappen')}
+• Voor het gespreksgedrag is het volgende ook van belang: ${g('overiggespr')}
 
 Waarden: ${waarden}
 Persoonlijkheid: ${persoonlijkheid}
