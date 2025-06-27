@@ -358,7 +358,7 @@ button {
     <h2>Overzicht en Genereren</h2>
     <button type="button" onclick="prevStep()">⬅️ Vorige</button>
     <button type="button" onclick="genereerPrompt()">🎯 Genereer Prompt</button>
-  </div>
+  
 
 </form>
 
@@ -368,6 +368,7 @@ button {
 <div id="kopieerMelding" style="margin-top:8px; color:green; font-weight:bold; display:none;">
   Prompt gekopieerd!
 </div>
+	</div>
 <script>
 const beschrijvingen = {
   taalniveau: ['zeer eenvoudig', 'eenvoudig', 'gemiddeld', 'complex', 'zeer complex'],
@@ -476,6 +477,8 @@ function kopieerPrompt() {
     }, 2000);
   });
 }
+
+//stappen indelen	
 let currentStep = 0;
 const steps = document.querySelectorAll('.step');
 
